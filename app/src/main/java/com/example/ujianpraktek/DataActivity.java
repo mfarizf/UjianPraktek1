@@ -11,6 +11,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.View;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -23,6 +24,7 @@ public class DataActivity extends AppCompatActivity implements NotesAdapter.OnNo
     Context context;
     RecyclerView.LayoutManager layoutManager;
     List<Notes> listNotesInfo;
+    String action;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -56,20 +58,22 @@ public class DataActivity extends AppCompatActivity implements NotesAdapter.OnNo
 
     @Override
     public void onNotesClick(final Notes notes , String action) {
-        dialog(notes, action);
+        dialog(notes);
     }
 
-    public void dialog(final Notes notes, final String action){
+    public void dialog(final Notes notes){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Choose Option");
-
-        String[] pilihan = {"EDIT","DELETE"};
+        final String[] pilihan = {"EDIT","DELETE"};
         builder.setItems(pilihan, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
+                String action = null;
                 switch (i){
                     case 0 :
+                        action = "EDIT";
                         Intent intent = new Intent(DataActivity.this,ManageData.class);
+                        intent.putExtra("action",action);
                         startActivity(intent);
                         break;
                     case 1 :
@@ -80,7 +84,9 @@ public class DataActivity extends AppCompatActivity implements NotesAdapter.OnNo
                 }
             }
         });
+        this.action = action;
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
+
     }
 }

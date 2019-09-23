@@ -16,6 +16,8 @@ public class ManageData extends AppCompatActivity implements NotesAdapter.OnNote
     EditText edtJudul, edtDeskripsi;
     Button btnSubmit;
     Context context;
+    String action;
+    Notes notes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +28,15 @@ public class ManageData extends AppCompatActivity implements NotesAdapter.OnNote
         edtJudul = findViewById(R.id.edtJudul);
         edtDeskripsi = findViewById(R.id.edtDesk);
         btnSubmit = findViewById(R.id.btnSubmit);
-
+        action = getIntent().getStringExtra("action");
+        if (action.equals("EDIT")){
+            DatabaseHelper db =new DatabaseHelper(context);
+            btnSubmit.setText("EDIT");
+            edtJudul.setFocusable(false);
+            edtJudul.setText(notes.getJudul());
+            edtDeskripsi.setText(notes.getJudul());
+            db.update(notes);
+        }
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -63,6 +73,7 @@ public class ManageData extends AppCompatActivity implements NotesAdapter.OnNote
     public void onNotesClick(Notes notes, String action) {
         if (action.equals("EDIT")){
             btnSubmit.setText("EDIT");
+            edtJudul.setFocusable(false);
         }
     }
 }

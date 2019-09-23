@@ -11,7 +11,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.view.View;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -58,12 +57,13 @@ public class DataActivity extends AppCompatActivity implements NotesAdapter.OnNo
 
     @Override
     public void onNotesClick(final Notes notes , String action) {
-        dialog(notes);
+        dialog(notes, action);
     }
 
-    public void dialog(final Notes notes){
+    public void dialog(final Notes notes, String action){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Choose Option");
+        action = "EDIT";
         final String[] pilihan = {"EDIT","DELETE"};
         builder.setItems(pilihan, new DialogInterface.OnClickListener() {
             @Override
